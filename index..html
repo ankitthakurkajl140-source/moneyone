@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login & Sign Up</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family: 'Poppins', sans-serif;}
+body { height:100vh; display:flex; justify-content:center; align-items:center; background:#f0f0f0;}
+.container {
+    display:flex;
+    width: 90%;
+    max-width: 900px;
+    background:#fff;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 10px 40px rgba(0,0,0,0.2);
+}
+.left {
+    flex:1;
+    background:#1c1c1c;
+    color:#fff;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    padding:30px;
+    text-align:center;
+}
+.left img {
+    width:210px;
+    margin-top:20px;
+    border-radius: 50px;
+}
+.left h1 { font-size:28px; margin-bottom:10px; }
+.right {
+    flex:1;
+    padding:40px 30px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+.form-container { display:flex; flex-direction:column; transition:0.5s; }
+.form-container h2 { margin-bottom:20px; }
+.form-container input {
+    padding:12px 15px;
+    margin-bottom:15px;
+    border:1px solid #ccc;
+    border-radius:50px;
+    outline:none;
+}
+.form-container button {
+    padding:12px;
+    border:none;
+    border-radius:50px;
+    background:linear-gradient(90deg,#ff512f,#dd2476);
+    color:#fff;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
+.form-container button:hover { opacity:0.9; }
+.toggle-text {
+    text-align:center;
+    margin-top:10px;
+    font-size:14px;
+}
+.toggle-text span { color:#dd2476; cursor:pointer; font-weight:600; }
+@media(max-width:768px) {
+    .container { flex-direction:column; }
+    .left { display:none; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="left">
+        <h1>Manage Your Money</h1>
+        <p>Global payments made simple – online payment solutions for you.</p>
+        <img src="C:\Users\Lenovo\OneDrive\文档\money pant\8027999.jpg" alt="App Image">
+    </div>
+    <div class="right">
+        <!-- Login Form -->
+        <div class="form-container" id="loginForm">
+            <h2>Sign In</h2>
+            <input type="text" id="loginEmail" placeholder="Email or Username">
+            <input type="password" id="loginPassword" placeholder="Password">
+            <a href="#" style="font-size:14px; color:#dd2476; margin-bottom:15px; text-decoration:none;">Forgot password?</a>
+            <button onclick="login()">Sign In</button>
+            <div class="toggle-text">
+                Don't have an account? <span onclick="toggleForm()">Sign Up</span>
+            </div>
+        </div>
+
+        <!-- Signup Form -->
+        <div class="form-container" id="signupForm" style="display:none;">
+            <h2>Sign Up</h2>
+            <input type="text" id="signupUsername" placeholder="Username">
+            <input type="email" id="signupEmail" placeholder="Email">
+            <input type="password" id="signupPassword" placeholder="Password">
+            <button onclick="signup()">Sign Up</button>
+            <div class="toggle-text">
+                Already have an account? <span onclick="toggleForm()">Sign In</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function toggleForm() {
+    const login = document.getElementById('loginForm');
+    const signup = document.getElementById('signupForm');
+    if(login.style.display === "none"){
+        login.style.display = "flex";
+        signup.style.display = "none";
+    } else {
+        login.style.display = "none";
+        signup.style.display = "flex";
+    }
+}
+
+// Dummy in-memory database
+let users = [];
+
+function signup() {
+    const username = document.getElementById('signupUsername').value;
+    const email = document.getElementById('signupEmail').value;
+    const password = document.getElementById('signupPassword').value;
+
+    const exists = users.find(u => u.email === email);
+    if(exists) {
+        alert('User already exists!');
+        return;
+    }
+
+    users.push({ username, email, password });
+    alert('Signup successful! You can now login.');
+    toggleForm();
+}
+
+function login() {
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+
+    const user = users.find(u => u.email === email && u.password === password);
+    if(user) {
+        alert('Login successful! Welcome ' + user.username);
+    } else {
+        alert('Login failed! Invalid credentials.');
+    }
+}
+</script>
+
+</body>
+</html>
